@@ -1,3 +1,5 @@
+import PopularCourse from "./components/popular-course";
+import UserReviews from "./components/user-reviews";
 
 export default function Home() {
   return (
@@ -11,6 +13,8 @@ export default function Home() {
           The ten Qiraat are distinct styles of Quranic recitation, each preserving the authenticity and beauty of the Quran.
         </p>
       </div>
+      <PopularCourse />
+      <UserReviews />
     </div>
   );
 }

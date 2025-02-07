@@ -67,11 +67,3 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
-
-.font-geist-sans {
-  font-family: var(--font-geist-sans);
-}
-
-.font-geist-mono {
-  font-family: var(--font-geist-mono);
-}

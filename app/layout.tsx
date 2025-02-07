@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
-import { GeistSans, GeistMono } from "geist/font";
+import { Geist } from 'next/font/google'
 import "./globals.css";
+import Footer from "./components/footer";
+import { Navbar } from "@/components/navbar";
+
+const geist = Geist({
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
   title: "Qiraathub Academy",
@@ -13,9 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={GeistSans.className}>
-      <body className={` antialiased`}>
+    <html lang="en" className={geist.className}>
+      <body className={`antialiased`}>
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

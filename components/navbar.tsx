@@ -51,72 +51,10 @@ export function Navbar() {
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden md:flex mx-auto">
           <NavigationMenuList className="flex gap-1">
-            {/* Qiraat Section */}
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="h-12 px-5 text-base font-medium transition-all duration-200 hover:text-theme_primary data-[state=open]:bg-slate-100/80 rounded-full">
-                Qiraat
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="w-[300px] p-4 bg-white rounded-2xl shadow-lg border border-slate-200/80"
-                >
-                  <div className="grid gap-3">
-                    {[
-                      { name: "Nafi' al-Madani", slug: "nafi-al-madani" },
-                      { name: "Ibn Kathir", slug: "ibn-kathir" },
-                      { name: "Abu Amr Basri", slug: "abu-amr-basri" },
-                      { name: "Asim Al Koofi", slug: "asim-al-koofi" },
-                      { name: "Hamza Al Kufi", slug: "hamza-al-kufi" },
-                      { name: "Abu Jaafar", slug: "abu-jaafar" },
-                      { name: "Khalaf Al Ashir", slug: "khalaf-al-ashir" },
-                    ].map((scholar) => (
-                      <Link
-                        key={scholar.slug}
-                        href={`/qiraat/${scholar.slug}`}
-                        className="block p-3 text-base rounded-xl transition-all duration-200 hover:bg-slate-100/80 hover:text-theme_primary"
-                      >
-                        {scholar.name}
-                      </Link>
-                    ))}
-                  </div>
-                </motion.div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            {/* Resources Section */}
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="h-12 px-5 text-base font-medium transition-all duration-200 hover:text-theme_primary data-[state=open]:bg-slate-100/80 rounded-full">
-                Resources
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="w-[240px] p-4 bg-white rounded-2xl shadow-lg border border-slate-200/80"
-                >
-                  <div className="grid gap-3">
-                    {[
-                      { name: "Downloads", href: "/resources/downloads" },
-                      { name: "Video Library", href: "/resources/video-library" },
-                      { name: "Audio Resources", href: "/resources/audio" },
-                    ].map((resource) => (
-                      <Link
-                        key={resource.href}
-                        href={resource.href}
-                        className="block p-3 text-base rounded-xl transition-all duration-200 hover:bg-slate-100/80 hover:text-theme_primary"
-                      >
-                        {resource.name}
-                      </Link>
-                    ))}
-                  </div>
-                </motion.div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
 
             {/* About & Contact */}
             {[
+              { name: "Courses", href: "/courses" },
               { name: "About", href: "/about" },
               { name: "Contact", href: "/contact" },
             ].map((item) => (
@@ -161,54 +99,6 @@ export function Navbar() {
                 <nav className="flex-1 overflow-y-auto">
                   <div className="flex flex-col p-6 space-y-6">
                     {/* Mobile Qiraat Menu */}
-                    <div className="space-y-3">
-                      <h2 className="text-base font-semibold text-slate-400 uppercase tracking-wider">
-                        Qiraat
-                      </h2>
-                      <div className="grid gap-2">
-                        {[
-                          { name: "Nafi' al-Madani", slug: "nafi-al-madani" },
-                          { name: "Ibn Kathir", slug: "ibn-kathir" },
-                          { name: "Abu Amr Basri", slug: "abu-amr-basri" },
-                          { name: "Asim Al Koofi", slug: "asim-al-koofi" },
-                          { name: "Hamza Al Kufi", slug: "hamza-al-kufi" },
-                          { name: "Abu Jaafar", slug: "abu-jaafar" },
-                          { name: "Khalaf Al Ashir", slug: "khalaf-al-ashir" },
-                        ].map((scholar) => (
-                          <Link
-                            key={scholar.slug}
-                            href={`/qiraat/${scholar.slug}`}
-                            className="block px-4 py-3.5 text-base text-slate-700 font-medium rounded-xl bg-white border border-slate-200/80 active:bg-slate-100 active:scale-[0.98] transition-transform"
-                            onClick={() => setIsOpen(false)}
-                          >
-                            {scholar.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Mobile Resources Menu */}
-                    <div className="space-y-3">
-                      <h2 className="text-base font-semibold text-slate-400 uppercase tracking-wider">
-                        Resources
-                      </h2>
-                      <div className="grid gap-2">
-                        {[
-                          { name: "Downloads", href: "/resources/downloads" },
-                          { name: "Video Library", href: "/resources/video-library" },
-                          { name: "Audio Resources", href: "/resources/audio" },
-                        ].map((resource) => (
-                          <Link
-                            key={resource.href}
-                            href={resource.href}
-                            className="block px-4 py-3.5 text-base text-slate-700 font-medium rounded-xl bg-white border border-slate-200/80 active:bg-slate-100 active:scale-[0.98] transition-transform"
-                            onClick={() => setIsOpen(false)}
-                          >
-                            {resource.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
 
                     {/* Mobile About & Contact */}
                     <div className="space-y-3">
@@ -217,7 +107,8 @@ export function Navbar() {
                       </h2>
                       <div className="grid gap-2">
                         {[
-                          { name: "About", href: "/about" },
+              { name: "Courses", href: "/courses" },
+              { name: "About", href: "/about" },
                           { name: "Contact", href: "/contact" },
                         ].map((item) => (
                           <Link
