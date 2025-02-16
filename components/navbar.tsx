@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -9,8 +9,6 @@ import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +22,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       className="relative z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/80"
@@ -33,10 +31,7 @@ export function Navbar() {
         <div className="flex items-center">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Image
                 src="/logo.png"
                 alt="Logo"
@@ -51,7 +46,6 @@ export function Navbar() {
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden md:flex mx-auto">
           <NavigationMenuList className="flex gap-1">
-
             {/* About & Contact */}
             {[
               { name: "Courses", href: "/courses" },
@@ -74,7 +68,11 @@ export function Navbar() {
         <div className="md:hidden ml-auto">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative scale-125">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative scale-125"
+              >
                 <Menu className="h-6 w-6 transition-all duration-200 rotate-0 scale-100" />
               </Button>
             </SheetTrigger>
@@ -84,7 +82,9 @@ export function Navbar() {
             >
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-6 border-b border-slate-200/80 bg-white">
-                  <span className="text-xl font-semibold text-slate-900">Menu</span>
+                  <span className="text-xl font-semibold text-slate-900">
+                    Menu
+                  </span>
                   <SheetClose asChild>
                     <Button
                       variant="ghost"
@@ -107,8 +107,8 @@ export function Navbar() {
                       </h2>
                       <div className="grid gap-2">
                         {[
-              { name: "Courses", href: "/courses" },
-              { name: "About", href: "/about" },
+                          { name: "Courses", href: "/courses" },
+                          { name: "About", href: "/about" },
                           { name: "Contact", href: "/contact" },
                         ].map((item) => (
                           <Link
