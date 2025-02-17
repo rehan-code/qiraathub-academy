@@ -18,6 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 import "react-datepicker/dist/react-datepicker.css";
 
 // Custom styles for the calendar
@@ -120,6 +122,7 @@ export default function BookAppointment() {
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [selectedCourse, setSelectedCourse] = useState<string>("");
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
+  const { toast } = useToast();
 
   // Reset time when course changes
   const handleCourseChange = (courseName: string) => {
@@ -130,6 +133,10 @@ export default function BookAppointment() {
     const course = COURSES.find(c => c.name === courseName);
     if (course) {
       setTimeSlots(generateTimeSlots(course.duration));
+      toast({
+        title: "Course Selected",
+        description: `Duration: ${course.duration} ${course.duration === 1 ? 'hour' : 'hours'}. Please select your preferred time.`,
+      });
     }
   };
 
@@ -137,17 +144,21 @@ export default function BookAppointment() {
     e.preventDefault();
     
     if (!selectedDate || !selectedTime || !selectedCourse) {
-      alert("Please fill in all fields");
+      toast({
+        title: "Error",
+        description: "Please fill in all fields",
+        variant: "destructive",
+      });
       return;
     }
 
     const course = COURSES.find(c => c.name === selectedCourse);
-    const appointmentData = {
-      date: format(selectedDate, "yyyy-MM-dd"),
-      time: selectedTime,
-      course: selectedCourse,
-      duration: course?.duration,
-    };
+    // const appointmentData = {
+    //   date: format(selectedDate, "yyyy-MM-dd"),
+    //   time: selectedTime,
+    //   course: selectedCourse,
+    //   duration: course?.duration,
+    // };
 
     // TODO: Add your API endpoint to handle the appointment booking
     try {
@@ -157,10 +168,22 @@ export default function BookAppointment() {
       //   body: JSON.stringify(appointmentData),
       // });
       
-      alert("Appointment booked successfully!"); // Replace with proper notification
+      toast({
+        title: "Success!",
+        description: `Your appointment for ${selectedCourse} has been booked for ${format(selectedDate, "MMMM d, yyyy")} at ${selectedTime}.`,
+      });
+
+      // Reset form
+      setSelectedTime("");
+      setSelectedCourse("");
+      setTimeSlots([]);
     } catch (error) {
       console.error("Error booking appointment:", error);
-      alert("Error booking appointment. Please try again."); // Replace with proper error handling
+      toast({
+        title: "Error",
+        description: "Error booking appointment. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -274,6 +297,7 @@ export default function BookAppointment() {
           </div>
         </div>
       </div>
+      <Toaster />
     </>
   );
 }
