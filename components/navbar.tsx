@@ -64,6 +64,13 @@ export function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
 
+        {/* Book Appointment Button - Desktop */}
+        <div className="hidden md:block">
+          <Button asChild className="bg-primary hover:bg-theme_primary">
+            <Link href="/book-appointment">Book Appointment</Link>
+          </Button>
+        </div>
+
         {/* Mobile Menu */}
         <div className="md:hidden ml-auto">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -111,17 +118,26 @@ export function Navbar() {
                           { name: "About", href: "/about" },
                           { name: "Contact", href: "/contact" },
                         ].map((item) => (
-                          <Link
+                            <Link
                             key={item.href}
-                            href={item.href}
+                              href={item.href}
                             className="block px-4 py-3.5 text-base text-slate-700 font-medium rounded-xl bg-white border border-slate-200/80 active:bg-slate-100 active:scale-[0.98] transition-transform"
                             onClick={() => setIsOpen(false)}
-                          >
-                            {item.name}
-                          </Link>
+                            >
+                              {item.name}
+                            </Link>
                         ))}
                       </div>
                     </div>
+
+                    {/* Book Appointment Button - Mobile */}
+                    <SheetClose asChild>
+                      <Link href="/book-appointment" className="block px-2 py-3">
+                        <Button className="w-full bg-primary hover:bg-theme_primary">
+                          Book Appointment
+                        </Button>
+                      </Link>
+                    </SheetClose>
                   </div>
                 </nav>
               </div>
