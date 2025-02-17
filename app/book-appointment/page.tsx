@@ -20,24 +20,6 @@ import {
 } from "@/components/ui/select";
 import "react-datepicker/dist/react-datepicker.css";
 
-// Available time slots
-const TIME_SLOTS = [
-  "09:00 AM",
-  "10:00 AM",
-  "11:00 AM",
-  "02:00 PM",
-  "03:00 PM",
-  "04:00 PM",
-];
-
-// Sample courses - replace with your actual courses
-const COURSES = [
-  { id: 1, name: "Quran Reading" },
-  { id: 2, name: "Tajweed" },
-  { id: 3, name: "Hifz Program" },
-  { id: 4, name: "Islamic Studies" },
-];
-
 // Custom styles for the calendar
 const calendarStyles = `
   .react-datepicker {
@@ -106,10 +88,50 @@ const calendarStyles = `
   }
 `;
 
+// Sample courses with duration in hours
+const COURSES = [
+  { id: 1, name: "Quran Reading", duration: 1 },
+  { id: 2, name: "Tajweed", duration: 1.5 },
+  { id: 3, name: "Hifz Program", duration: 2 },
+  { id: 4, name: "Islamic Studies", duration: 1 },
+];
+
+// Function to generate time slots based on course duration
+const generateTimeSlots = (durationHours: number) => {
+  const slots: string[] = [];
+  const startHour = 9; // 9 AM
+  const endHour = 21; // 8 PM
+  
+  for (let hour = startHour; hour <= endHour - durationHours; hour++) {
+    const time = new Date();
+    time.setHours(hour, 0, 0);
+    slots.push(time.toLocaleTimeString('en-US', { 
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true 
+    }));
+  }
+  
+  return slots;
+};
+
 export default function BookAppointment() {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [selectedCourse, setSelectedCourse] = useState<string>("");
+  const [timeSlots, setTimeSlots] = useState<string[]>([]);
+
+  // Reset time when course changes
+  const handleCourseChange = (courseName: string) => {
+    setSelectedCourse(courseName);
+    setSelectedTime(""); // Reset selected time
+    
+    // Find selected course and generate time slots
+    const course = COURSES.find(c => c.name === courseName);
+    if (course) {
+      setTimeSlots(generateTimeSlots(course.duration));
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,10 +141,12 @@ export default function BookAppointment() {
       return;
     }
 
+    const course = COURSES.find(c => c.name === selectedCourse);
     const appointmentData = {
       date: format(selectedDate, "yyyy-MM-dd"),
       time: selectedTime,
       course: selectedCourse,
+      duration: course?.duration,
     };
 
     // TODO: Add your API endpoint to handle the appointment booking
@@ -152,18 +176,23 @@ export default function BookAppointment() {
               <CardHeader>
                 <CardTitle>Select Date</CardTitle>
                 <CardDescription>
-                  Choose your preferred appointment date
+                  Choose your preferred appointment date from the calendar below
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <DatePicker
-                  selected={selectedDate}
-                  onChange={(date) => setSelectedDate(date)}
-                  minDate={new Date()}
-                  dateFormat="MMMM d, yyyy"
-                  inline
-                  calendarClassName="!w-full"
-                />
+                <div className="space-y-4">
+                  <DatePicker
+                    selected={selectedDate}
+                    onChange={(date) => setSelectedDate(date)}
+                    minDate={new Date()}
+                    dateFormat="MMMM d, yyyy"
+                    inline
+                    calendarClassName="!w-full"
+                  />
+                  <div className="text-sm text-slate-500">
+                    Selected date: {selectedDate ? format(selectedDate, "MMMM d, yyyy") : "Please select a date"}
+                  </div>
+                </div>
               </CardContent>
             </Card>
 
@@ -172,39 +201,18 @@ export default function BookAppointment() {
               <CardHeader>
                 <CardTitle>Appointment Details</CardTitle>
                 <CardDescription>
-                  Select your preferred time and course
+                  Select your course and preferred time
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="space-y-4">
                     {/* Selected Date Display */}
-                    {selectedDate && (
-                      <div className="p-3 bg-slate-50 rounded-lg">
-                        <p className="text-sm text-slate-500">Selected Date</p>
-                        <p className="font-medium">
-                          {format(selectedDate, "MMMM d, yyyy")}
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Time Selection */}
-                    <div className="space-y-2">
-                      <label className="block text-sm font-medium text-gray-700">
-                        Select Time
-                      </label>
-                      <Select onValueChange={setSelectedTime}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose a time" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {TIME_SLOTS.map((time) => (
-                            <SelectItem key={time} value={time}>
-                              {time}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                    <div className="p-3 bg-slate-50 rounded-lg">
+                      <p className="text-sm text-slate-500">Selected Date</p>
+                      <p className="font-medium">
+                        {format(selectedDate || new Date(), "MMMM d, yyyy")}
+                      </p>
                     </div>
 
                     {/* Course Selection */}
@@ -212,19 +220,45 @@ export default function BookAppointment() {
                       <label className="block text-sm font-medium text-gray-700">
                         Select Course
                       </label>
-                      <Select onValueChange={setSelectedCourse}>
+                      <Select onValueChange={handleCourseChange}>
                         <SelectTrigger>
                           <SelectValue placeholder="Choose a course" />
                         </SelectTrigger>
                         <SelectContent>
                           {COURSES.map((course) => (
                             <SelectItem key={course.id} value={course.name}>
-                              {course.name}
+                              {course.name} ({course.duration} {course.duration === 1 ? 'hour' : 'hours'})
                             </SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
                     </div>
+
+                    {/* Time Selection */}
+                    {selectedCourse && (
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Select Time
+                        </label>
+                        <Select onValueChange={setSelectedTime} value={selectedTime}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Choose a time" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {timeSlots.map((time) => (
+                              <SelectItem key={time} value={time}>
+                                {time}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <p className="text-sm text-slate-500 mt-1">
+                          Duration: {COURSES.find(c => c.name === selectedCourse)?.duration} {
+                            COURSES.find(c => c.name === selectedCourse)?.duration === 1 ? 'hour' : 'hours'
+                          }
+                        </p>
+                      </div>
+                    )}
                   </div>
 
                   <Button
