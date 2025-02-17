@@ -152,7 +152,7 @@ export default function BookAppointment() {
       return;
     }
 
-    const course = COURSES.find(c => c.name === selectedCourse);
+    // const course = COURSES.find(c => c.name === selectedCourse);
     // const appointmentData = {
     //   date: format(selectedDate, "yyyy-MM-dd"),
     //   time: selectedTime,
