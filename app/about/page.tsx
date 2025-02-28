@@ -8,7 +8,7 @@ const AboutPage = () => {
       {/* Hero Section */}
       <div className="relative h-[500px] w-full overflow-hidden">
         <Image
-          src="https://qiraathub.com/wp-content/uploads/2024/09/quran-islam-laptop-wallpaper-6114872-1-768x512.jpg"
+          src="https://old.qiraathub.com/wp-content/uploads/2024/09/quran-islam-laptop-wallpaper-6114872-1-768x512.jpg"
           alt="QiraatHub Hero"
           fill
           className="object-cover brightness-50"
@@ -44,7 +44,7 @@ const AboutPage = () => {
           <div className="order-1 md:order-2">
             <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
               <Image
-                src="https://qiraathub.com/wp-content/uploads/2024/09/quran_read20-1280x640-1-768x384.jpg"
+                src="https://old.qiraathub.com/wp-content/uploads/2024/09/quran_read20-1280x640-1-768x384.jpg"
                 alt="Our Mission"
                 fill
                 className="object-cover"

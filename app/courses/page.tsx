@@ -8,37 +8,37 @@ const CoursesPage = () => {
       id: 1,
       title: "Hamzah al Kofi",
       description: "Learn the Qira'at of Hamzah al Kofi",
-      image: "https://qiraathub.com/wp-content/uploads/2024/09/book-quran-scripture-8224121-1-768x512.png"
+      image: "https://old.qiraathub.com/wp-content/uploads/2024/09/book-quran-scripture-8224121-1-768x512.png"
     },
     {
       id: 2,
       title: "Asim al Koofi",
       description: "Learn the Qira'at of Asim al Koofi",
-      image: "https://qiraathub.com/wp-content/uploads/2024/09/an-quran-scripture-7741928-1-768x513.jpg"
+      image: "https://old.qiraathub.com/wp-content/uploads/2024/09/an-quran-scripture-7741928-1-768x513.jpg"
     },
     {
       id: 3,
       title: "Ibn Amir Dimashqi",
       description: "Learn the Qira'at of Ibn Amir Dimashqi",
-      image: "https://qiraathub.com/wp-content/uploads/2024/09/quran-islam-book-6862296-1-768x512.jpg"
+      image: "https://old.qiraathub.com/wp-content/uploads/2024/09/quran-islam-book-6862296-1-768x512.jpg"
     },
     {
       id: 4,
       title: "Abu Amr Al Basri",
       description: "Learn the Qira'at of Abu Amr Al Basri",
-      image: "https://qiraathub.com/wp-content/uploads/2024/09/book-quran-open-1283468-1-768x512.jpg"
+      image: "https://old.qiraathub.com/wp-content/uploads/2024/09/book-quran-open-1283468-1-768x512.jpg"
     },
     {
       id: 5,
       title: "Ibn Kathir",
       description: "Learn the Qira'at of Ibn Kathir",
-      image: "https://qiraathub.com/wp-content/uploads/2024/09/quran_read20-1280x640-1-768x384.jpg"
+      image: "https://old.qiraathub.com/wp-content/uploads/2024/09/quran_read20-1280x640-1-768x384.jpg"
     },
     {
       id: 6,
       title: "Nafi' Al Madani",
       description: "Learn the Qira'at of Nafi' Al Madani",
-      image: "https://qiraathub.com/wp-content/uploads/2024/09/quran-islam-laptop-wallpaper-6114872-1-768x512.jpg"
+      image: "https://old.qiraathub.com/wp-content/uploads/2024/09/quran-islam-laptop-wallpaper-6114872-1-768x512.jpg"
     }
   ];
 
