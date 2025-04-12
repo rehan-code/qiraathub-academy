@@ -17,6 +17,53 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
+import { SignInButton, SignUpButton, UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
+
+// Authentication buttons component for desktop view
+function AuthButtons() {
+  return (
+    <div className="flex items-center gap-4 p-4">
+      <SignedOut>
+        <SignInButton />
+        <SignUpButton />
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
+    </div>
+  );
+}
+
+// Authentication buttons component for mobile view
+function MobileAuthButtons() {
+  return (
+    <div>
+      <SignedOut>
+        <div className="flex gap-2">
+          <SheetClose asChild>
+            <SignInButton>
+              <button className="flex-1 px-4 py-3.5 text-base text-slate-700 font-medium rounded-xl bg-white border border-slate-200/80 active:bg-slate-100 active:scale-[0.98] transition-transform">
+                Sign In
+              </button>
+            </SignInButton>
+          </SheetClose>
+          <SheetClose asChild>
+            <SignUpButton>
+              <button className="flex-1 px-4 py-3.5 text-base text-slate-700 font-medium rounded-xl bg-white border border-slate-200/80 active:bg-slate-100 active:scale-[0.98] transition-transform">
+                Sign Up
+              </button>
+            </SignUpButton>
+          </SheetClose>
+        </div>
+      </SignedOut>
+      <SignedIn>
+        <div className="flex items-center justify-center px-4 py-3.5 text-base text-slate-700 font-medium rounded-xl bg-white border border-slate-200/80">
+          <UserButton />
+        </div>
+      </SignedIn>
+    </div>
+  );
+}
 
 export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -64,8 +111,9 @@ export function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Book Appointment Button - Desktop */}
-        <div className="hidden md:block">
+        {/* Auth and Book Appointment Buttons - Desktop */}
+        <div className="hidden md:flex items-center gap-3">
+          <AuthButtons />
           <Button asChild className="bg-primary hover:bg-theme_primary">
             <Link href="/book-appointment">Book Appointment</Link>
           </Button>
@@ -128,6 +176,14 @@ export function Navbar() {
                             </Link>
                         ))}
                       </div>
+                    </div>
+
+                    {/* Auth Buttons - Mobile */}
+                    <div className="space-y-3">
+                      <h2 className="text-base font-semibold text-slate-400 uppercase tracking-wider">
+                        Account
+                      </h2>
+                      <MobileAuthButtons />
                     </div>
 
                     {/* Book Appointment Button - Mobile */}
