@@ -282,8 +282,7 @@ const coursesData: Record<string, CourseData> = {
   }
 };
 
-export default async function CourseResourcePage({ params }: { params: { slug: string } }) {
-  // In Next.js App Router, params may need to be awaited in some cases
+export default async function CourseResourcePage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await Promise.resolve(params);
   const { slug } = resolvedParams;
   const course = coursesData[slug];
