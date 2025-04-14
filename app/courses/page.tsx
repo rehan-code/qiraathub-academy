@@ -6,36 +6,42 @@ const CoursesPage = () => {
   const courses = [
     {
       id: 1,
+      slug: "hamzah-al-kofi",
       title: "Hamzah al Kofi",
       description: "Learn the Qira'at of Hamzah al Kofi",
       image: "https://old.qiraathub.com/wp-content/uploads/2024/09/book-quran-scripture-8224121-1-768x512.png"
     },
     {
       id: 2,
+      slug: "asim-al-koofi",
       title: "Asim al Koofi",
       description: "Learn the Qira'at of Asim al Koofi",
       image: "https://old.qiraathub.com/wp-content/uploads/2024/09/an-quran-scripture-7741928-1-768x513.jpg"
     },
     {
       id: 3,
+      slug: "ibn-amir-dimashqi",
       title: "Ibn Amir Dimashqi",
       description: "Learn the Qira'at of Ibn Amir Dimashqi",
       image: "https://old.qiraathub.com/wp-content/uploads/2024/09/quran-islam-book-6862296-1-768x512.jpg"
     },
     {
       id: 4,
+      slug: "abu-amr-al-basri",
       title: "Abu Amr Al Basri",
       description: "Learn the Qira'at of Abu Amr Al Basri",
       image: "https://old.qiraathub.com/wp-content/uploads/2024/09/book-quran-open-1283468-1-768x512.jpg"
     },
     {
       id: 5,
+      slug: "ibn-kathir",
       title: "Ibn Kathir",
       description: "Learn the Qira'at of Ibn Kathir",
       image: "https://old.qiraathub.com/wp-content/uploads/2024/09/quran_read20-1280x640-1-768x384.jpg"
     },
     {
       id: 6,
+      slug: "nafi-al-madani",
       title: "Nafi' Al Madani",
       description: "Learn the Qira'at of Nafi' Al Madani",
       image: "https://old.qiraathub.com/wp-content/uploads/2024/09/quran-islam-laptop-wallpaper-6114872-1-768x512.jpg"
@@ -63,7 +69,7 @@ const CoursesPage = () => {
               <h2 className="text-xl font-semibold mb-2">{course.title}</h2>
               <p className="text-gray-600 mb-4">{course.description}</p>
               <Link 
-                href={`/courses/`}
+                href={`/courses/${course.slug}`}
                 className="inline-block bg-theme_primary text-white px-4 py-2 rounded-md hover:bg-theme_primary/90 transition-colors duration-300"
               >
                 Enroll Now
