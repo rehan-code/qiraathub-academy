@@ -4,7 +4,7 @@ import UserReviews from "./components/user-reviews";
 export default function Home() {
   return (
     <div>
-      <div className="text-center max-w-2xl mx-auto pt-[5rem] px-4">
+      <div className="text-center max-w-2xl mx-auto py-20 px-4">
         <h1 className="text-4xl font-bold mb-6 relative inline-block">
           Learn the Ten Qiraat
           <div className="absolute right-[-10px] bottom-[-5px] w-[190px] h-[3px] bg-yellow-400 rounded-full"></div>

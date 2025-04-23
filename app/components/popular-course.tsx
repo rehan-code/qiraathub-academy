@@ -3,8 +3,8 @@ import TypingAnimation from './typing-animation';
 
 export default function PopularCourse() {
   return (
-    <div className="bg-gradient-to-b from-white to-gray-50 py-24">
-      <div className="container mx-auto px-4">
+    <div className="bg-gradient-to-b from-white to-gray-50 py-24 pt-4">
+      <div className="container mx-auto px-24">
         <div className="grid md:grid-cols-5 gap-12 items-center">
           {/* Left Content */}
           <div className="md:col-span-3 space-y-8">
