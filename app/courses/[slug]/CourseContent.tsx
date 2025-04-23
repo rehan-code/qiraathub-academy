@@ -4,38 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Play, CheckCircle, BookOpen, FileText, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
-
-// Import types from the parent component
-interface Video {
-  id: number;
-  title: string;
-  duration: string;
-  url: string;
-  thumbnail: string;
-  completed?: boolean;
-}
-
-interface Resource {
-  id: number;
-  title: string;
-  type: 'pdf' | 'doc' | 'quiz';
-  url: string;
-}
-
-interface CourseData {
-  id: number;
-  slug: string;
-  title: string;
-  description: string;
-  image: string;
-  instructor: string;
-  instructorTitle: string;
-  instructorImage?: string; // Made optional with the ? operator
-  totalVideos: number;
-  totalHours: string;
-  videos: Video[];
-  resources: Resource[];
-}
+import { CourseData, Video } from '@/data/coursesData';
 
 interface CourseContentProps {
   course: CourseData;
