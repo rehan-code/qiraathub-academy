@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, BookOpen, User2 } from 'lucide-react';
 import CourseContent from './CourseContent';
 
 // Define the course content type
@@ -326,14 +326,18 @@ export default async function CourseResourcePage({ params }: { params: Promise<{
               <p className="text-gray-600 mb-4">{course.description}</p>
               
               <div className="flex items-center mb-4">
-                <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gray-200 mr-3">
-                  {course.instructorImage && (
+                <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gray-200 mr-3 flex items-center justify-center">
+                  {course.instructorImage ? (
                     <Image
                       src={course.instructorImage}
                       alt={course.instructor}
                       fill
                       className="object-cover"
                     />
+                  ) : (
+                    <div className="text-gray-500 h-6 w-6">
+                      <User2 className="h-full w-full" />
+                    </div>
                   )}
                 </div>
                 <div>
