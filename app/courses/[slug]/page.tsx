@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, User2 } from 'lucide-react';
+import { ArrowLeft, User2 } from 'lucide-react';
 import CourseContent from './CourseContent';
 
 // Define the course content type
