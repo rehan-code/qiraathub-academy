@@ -13,7 +13,8 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
 // Define which routes require authentication
 const isProtectedRoute = createRouteMatcher([
-  "/courses/(.*)" // This matches /courses/{slug} pattern for course detail pages
+  "/courses/(.*)", // This matches /courses/{slug} pattern for course detail pages
+  "/book-appointment/(.*)"
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
