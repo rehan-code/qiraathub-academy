@@ -111,11 +111,11 @@ export function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Auth and Book Appointment Buttons - Desktop */}
+        {/* Auth and Book Class Buttons - Desktop */}
         <div className="hidden md:flex items-center gap-3">
           <AuthButtons />
           <Button asChild className="bg-primary hover:bg-theme_primary">
-            <Link href="/book-appointment">Book Appointment</Link>
+            <Link href="/book-appointment">Book a Class</Link>
           </Button>
         </div>
 

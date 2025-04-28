@@ -21,7 +21,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import "react-datepicker/dist/react-datepicker.css";
-import { SignedIn, useUser } from "@clerk/nextjs";
+import { SignedOut, useUser } from "@clerk/nextjs";
 
 // Custom styles for the calendar
 const calendarStyles = `
@@ -111,7 +111,7 @@ const generateTimeSlots = (durationHours: number) => {
   return slots;
 };
 
-export default function BookAppointment() {
+export default function BookClass() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [selectedCourse, setSelectedCourse] = useState<string>("");
@@ -178,7 +178,7 @@ export default function BookAppointment() {
     }
 
     // const course = COURSES.find(c => c.name === selectedCourse);
-    // const appointmentData = {
+    // const classData = {
     //   date: format(selectedDate, "yyyy-MM-dd"),
     //   time: selectedTime,
     //   course: selectedCourse,
@@ -186,17 +186,17 @@ export default function BookAppointment() {
     //   email: email,
     // };
 
-    // TODO: Add your API endpoint to handle the appointment booking
+    // TODO: Add your API endpoint to handle the class booking
     try {
-      // const response = await fetch("/api/book-appointment", {
+      // const response = await fetch("/api/book-class", {
       //   method: "POST",
       //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(appointmentData),
+      //   body: JSON.stringify(classData),
       // });
       
       toast({
         title: "Success!",
-        description: `Your appointment for ${selectedCourse} has been booked for ${format(selectedDate, "MMMM d, yyyy")} at ${selectedTime}.`,
+        description: `Your class for ${selectedCourse} has been booked for ${format(selectedDate, "MMMM d, yyyy")} at ${selectedTime}.`,
       });
 
       // Reset form
@@ -205,10 +205,10 @@ export default function BookAppointment() {
       setEmail("");
       setTimeSlots([]);
     } catch (error) {
-      console.error("Error booking appointment:", error);
+      console.error("Error booking class:", error);
       toast({
         title: "Error",
-        description: "Error booking appointment. Please try again.",
+        description: "Error booking class. Please try again.",
         variant: "destructive",
       });
     }
@@ -226,7 +226,7 @@ export default function BookAppointment() {
               <CardHeader>
                 <CardTitle>Select Date</CardTitle>
                 <CardDescription>
-                  Choose your preferred appointment date from the calendar below
+                  Choose your preferred class date from the calendar below
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -265,7 +265,7 @@ export default function BookAppointment() {
                       </p>
                     </div>
                     {/* Email Field - Only shown when user is not logged in */}
-                    {(!isLoaded || !isSignedIn || !user?.primaryEmailAddress) && (
+                    <SignedOut  >
                       <div className="space-y-2">
                         <label className="block text-sm font-medium text-gray-700">
                           Email Address
@@ -281,7 +281,7 @@ export default function BookAppointment() {
                           />
                         </div>
                       </div>
-                    )}
+                    </SignedOut>
 
                     {/* Course Selection */}
                     <div className="space-y-2">
