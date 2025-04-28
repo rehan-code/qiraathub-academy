@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import "react-datepicker/dist/react-datepicker.css";
+import { useUser } from "@clerk/nextjs";
 
 // Custom styles for the calendar
 const calendarStyles = `
@@ -121,8 +122,17 @@ export default function BookAppointment() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [selectedCourse, setSelectedCourse] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const { toast } = useToast();
+  const { isLoaded, isSignedIn, user } = useUser();
+
+  // Autofill email if user is logged in
+  useEffect(() => {
+    if (isLoaded && isSignedIn && user?.primaryEmailAddress) {
+      setEmail(user.primaryEmailAddress.emailAddress);
+    }
+  }, [isLoaded, isSignedIn, user]);
 
   // Reset time when course changes
   const handleCourseChange = (courseName: string) => {
@@ -143,10 +153,21 @@ export default function BookAppointment() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!selectedDate || !selectedTime || !selectedCourse) {
+    if (!selectedDate || !selectedTime || !selectedCourse || !email) {
       toast({
         title: "Error",
         description: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast({
+        title: "Error",
+        description: "Please enter a valid email address",
         variant: "destructive",
       });
       return;
@@ -158,6 +179,7 @@ export default function BookAppointment() {
     //   time: selectedTime,
     //   course: selectedCourse,
     //   duration: course?.duration,
+    //   email: email,
     // };
 
     // TODO: Add your API endpoint to handle the appointment booking
@@ -176,6 +198,7 @@ export default function BookAppointment() {
       // Reset form
       setSelectedTime("");
       setSelectedCourse("");
+      setEmail("");
       setTimeSlots([]);
     } catch (error) {
       console.error("Error booking appointment:", error);
@@ -237,6 +260,24 @@ export default function BookAppointment() {
                         {format(selectedDate || new Date(), "MMMM d, yyyy")}
                       </p>
                     </div>
+                    {/* Email Field - Only shown when user is not logged in */}
+                    {(!isLoaded || !isSignedIn || !user?.primaryEmailAddress) && (
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Email Address
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="your.email@example.com"
+                            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-theme_primary focus:border-transparent"
+                            required
+                          />
+                        </div>
+                      </div>
+                    )}
 
                     {/* Course Selection */}
                     <div className="space-y-2">
