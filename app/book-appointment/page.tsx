@@ -21,7 +21,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import "react-datepicker/dist/react-datepicker.css";
-import { useUser } from "@clerk/nextjs";
+import { SignedIn, useUser } from "@clerk/nextjs";
 
 // Custom styles for the calendar
 const calendarStyles = `
@@ -91,13 +91,6 @@ const calendarStyles = `
   }
 `;
 
-// Sample courses with duration in hours
-const COURSES = [
-  { id: 1, name: "Quran Reading", duration: 1 },
-  { id: 2, name: "Tajweed", duration: 1.5 },
-  { id: 3, name: "Hifz Program", duration: 2 },
-  { id: 4, name: "Islamic Studies", duration: 1 },
-];
 
 // Function to generate time slots based on course duration
 const generateTimeSlots = (durationHours: number) => {
@@ -126,6 +119,17 @@ export default function BookAppointment() {
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const { toast } = useToast();
   const { isLoaded, isSignedIn, user } = useUser();
+
+  // courses
+  const COURSES = [
+    { id: 1, name: "Trial / Evaluation Class", duration: 1 },
+    ...isSignedIn ? [
+      { id: 2, name: "Quran Reading", duration: 1 },
+      { id: 3, name: "Tajweed", duration: 1.5 },
+      { id: 4, name: "Hifz Program", duration: 2 },
+      { id: 5, name: "Islamic Studies", duration: 1 },
+    ] : []
+  ];
 
   // Autofill email if user is logged in
   useEffect(() => {
@@ -215,7 +219,7 @@ export default function BookAppointment() {
       <style>{calendarStyles}</style>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-8">Book an Appointment</h1>
+          <h1 className="text-3xl font-bold text-center mb-8">Book a Class</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Calendar Section */}
             <Card className="md:order-1">
@@ -245,7 +249,7 @@ export default function BookAppointment() {
             {/* Time and Course Selection */}
             <Card className="md:order-2">
               <CardHeader>
-                <CardTitle>Appointment Details</CardTitle>
+                <CardTitle>Class Details</CardTitle>
                 <CardDescription>
                   Select your course and preferred time
                 </CardDescription>
@@ -330,7 +334,7 @@ export default function BookAppointment() {
                     className="w-full bg-theme_primary hover:bg-theme_primary/90"
                     disabled={!selectedDate || !selectedTime || !selectedCourse}
                   >
-                    Book Appointment
+                    Book Class
                   </Button>
                 </form>
               </CardContent>
