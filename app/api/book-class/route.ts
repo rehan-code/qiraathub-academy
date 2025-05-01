@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     
     // Create calendar event
     const calendar = ical({
-      domain: 'qiraathub.com',
+      prodId: { company: 'qiraathub.com', product: 'QiraatHub Academy Class' },
       name: 'QiraatHub Academy Class',
     });
     
@@ -62,16 +62,16 @@ export async function POST(request: Request) {
       },
     });
     
-    // Send email with calendar invite
+    // Send email with calendar invite to the student
     await transporter.sendMail({
       from: `"QiraatHub Academy" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: `Class Confirmation: ${course}`,
+      subject: `Class Scheduled: ${course}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #2563eb;">Your Class is Confirmed!</h2>
+          <h2 style="color: #2563eb;">Your Class is Scheduled!</h2>
           <p>Dear Student,</p>
-          <p>Your class has been successfully booked. Here are the details:</p>
+          <p>Your class has been successfully scheduled. Here are the details:</p>
           <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
             <p><strong>Course:</strong> ${course}</p>
             <p><strong>Date:</strong> ${new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
@@ -82,6 +82,32 @@ export async function POST(request: Request) {
           <p>If you need to reschedule or cancel, please contact us at ${process.env.EMAIL_USER}.</p>
           <p>We look forward to seeing you!</p>
           <p>Best regards,<br>QiraatHub Academy Team</p>
+        </div>
+      `,
+      icalEvent: {
+        filename: 'class-invitation.ics',
+        method: 'REQUEST',
+        content: calendar.toString(),
+      },
+    });
+    
+    // Send notification email to admin
+    await transporter.sendMail({
+      from: `"QiraatHub Academy" <${process.env.EMAIL_USER}>`,
+      to: process.env.EMAIL_USER,
+      subject: `New Class Scheduled: ${course}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #2563eb;">New Class Scheduled</h2>
+          <p>A new class has been scheduled. Here are the details:</p>
+          <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <p><strong>Student Email:</strong> ${email}</p>
+            <p><strong>Course:</strong> ${course}</p>
+            <p><strong>Date:</strong> ${new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            <p><strong>Time:</strong> ${time}</p>
+            <p><strong>Duration:</strong> ${duration} ${duration === 1 ? 'hour' : 'hours'}</p>
+          </div>
+          <p>This is an automated notification.</p>
         </div>
       `,
       icalEvent: {
