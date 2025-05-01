@@ -177,26 +177,36 @@ export default function BookClass() {
       return;
     }
 
-    // const course = COURSES.find(c => c.name === selectedCourse);
-    // const classData = {
-    //   date: format(selectedDate, "yyyy-MM-dd"),
-    //   time: selectedTime,
-    //   course: selectedCourse,
-    //   duration: course?.duration,
-    //   email: email,
-    // };
+    const course = COURSES.find(c => c.name === selectedCourse);
+    const classData = {
+      date: format(selectedDate, "yyyy-MM-dd"),
+      time: selectedTime,
+      course: selectedCourse,
+      duration: course?.duration,
+      email: email,
+    };
 
-    // TODO: Add your API endpoint to handle the class booking
     try {
-      // const response = await fetch("/api/book-class", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(classData),
-      // });
+      // Show loading toast
+      toast({
+        title: "Booking in progress",
+        description: "Please wait while we process your booking...",
+      });
+      
+      // Call API endpoint to book class and send email with calendar invite
+      const response = await fetch("/api/book-class", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(classData),
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to book class");
+      }
       
       toast({
         title: "Success!",
-        description: `Your class for ${selectedCourse} has been booked for ${format(selectedDate, "MMMM d, yyyy")} at ${selectedTime}.`,
+        description: `Your class for ${selectedCourse} has been booked for ${format(selectedDate, "MMMM d, yyyy")} at ${selectedTime}. A confirmation email with calendar invite has been sent to ${email}.`,
       });
 
       // Reset form

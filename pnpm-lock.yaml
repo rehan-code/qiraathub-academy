@@ -47,12 +47,18 @@ importers:
       framer-motion:
         specifier: ^12.4.1
         version: 12.4.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      ical-generator:
+        specifier: ^8.1.1
+        version: 8.1.1(@types/node@20.17.17)
       lucide-react:
         specifier: ^0.474.0
         version: 0.474.0(react@19.0.0)
       next:
         specifier: 15.1.6
         version: 15.1.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      nodemailer:
+        specifier: ^6.10.1
+        version: 6.10.1
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -78,6 +84,9 @@ importers:
       '@types/node':
         specifier: ^20
         version: 20.17.17
+      '@types/nodemailer':
+        specifier: ^6.4.17
+        version: 6.4.17
       '@types/react':
         specifier: ^19
         version: 19.0.8
@@ -783,6 +792,9 @@ packages:
   '@types/node@20.17.17':
     resolution: {integrity: sha512-/WndGO4kIfMicEQLTi/mDANUu/iVUhT7KboZPdEqqHQ4aTS+3qT3U5gIqWDFV+XouorjfgGqvKILJeHhuQgFYg==}
 
+  '@types/nodemailer@6.4.17':
+    resolution: {integrity: sha512-I9CCaIp6DTldEg7vyUTZi8+9Vo0hi1/T8gv3C89yk1rSAAzoKQ8H8ki/jBYJSFoH/BisgLP8tkZMlQ91CIquww==}
+
   '@types/react-dom@19.0.3':
     resolution: {integrity: sha512-0Knk+HJiMP/qOZgMyNFamlIjw9OFCsyC2ZbigmEEyXXixgre6IQpm/4V+r3qH4GC1JPvRJKInw+on2rV6YZLeA==}
     peerDependencies:
@@ -1431,6 +1443,39 @@ packages:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
 
+  ical-generator@8.1.1:
+    resolution: {integrity: sha512-vorfUDZk4NaVLB7f1pm9AeRGy0jTYn7QUHZCFCMx3EGOz9+yykdAjA1i4ez+ZLAEK55lmutCXvVovEdTj9s1XA==}
+    engines: {node: 18 || 20 || >=22.0.0}
+    peerDependencies:
+      '@touch4it/ical-timezones': '>=1.6.0'
+      '@types/luxon': '>= 1.26.0'
+      '@types/mocha': '>= 8.2.1'
+      '@types/node': '*'
+      dayjs: '>= 1.10.0'
+      luxon: '>= 1.26.0'
+      moment: '>= 2.29.0'
+      moment-timezone: '>= 0.5.33'
+      rrule: '>= 2.6.8'
+    peerDependenciesMeta:
+      '@touch4it/ical-timezones':
+        optional: true
+      '@types/luxon':
+        optional: true
+      '@types/mocha':
+        optional: true
+      '@types/node':
+        optional: true
+      dayjs:
+        optional: true
+      luxon:
+        optional: true
+      moment:
+        optional: true
+      moment-timezone:
+        optional: true
+      rrule:
+        optional: true
+
   ignore@5.3.2:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
@@ -1718,6 +1763,10 @@ packages:
 
   no-case@3.0.4:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
+
+  nodemailer@6.10.1:
+    resolution: {integrity: sha512-Z+iLaBGVaSjbIzQ4pX6XV41HrooLsQ10ZWPUehGmuantvzWoDVBnmsdUcOIDM1t+yPor5pDhVlDESgOMEGxhHA==}
+    engines: {node: '>=6.0.0'}
 
   normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
@@ -2251,6 +2300,9 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+
+  uuid-random@1.3.2:
+    resolution: {integrity: sha512-UOzej0Le/UgkbWEO8flm+0y+G+ljUon1QWTEZOq1rnMAsxo2+SckbiZdKzAHHlVh6gJqI1TjC/xwgR50MuCrBQ==}
 
   which-boxed-primitive@1.1.1:
     resolution: {integrity: sha512-TbX3mj8n0odCBFVlY8AxkqcHASw3L60jIuF8jFP78az3C2YhmGvqbHBpAjTRH2/xqYunrJ9g1jSyjCjpoWzIAA==}
@@ -2930,6 +2982,10 @@ snapshots:
   '@types/node@20.17.17':
     dependencies:
       undici-types: 6.19.8
+
+  '@types/nodemailer@6.4.17':
+    dependencies:
+      '@types/node': 20.17.17
 
   '@types/react-dom@19.0.3(@types/react@19.0.8)':
     dependencies:
@@ -3777,6 +3833,12 @@ snapshots:
     dependencies:
       function-bind: 1.1.2
 
+  ical-generator@8.1.1(@types/node@20.17.17):
+    dependencies:
+      uuid-random: 1.3.2
+    optionalDependencies:
+      '@types/node': 20.17.17
+
   ignore@5.3.2: {}
 
   import-fresh@3.3.1:
@@ -4065,6 +4127,8 @@ snapshots:
     dependencies:
       lower-case: 2.0.2
       tslib: 2.8.1
+
+  nodemailer@6.10.1: {}
 
   normalize-path@3.0.0: {}
 
@@ -4689,6 +4753,8 @@ snapshots:
       react: 19.0.0
 
   util-deprecate@1.0.2: {}
+
+  uuid-random@1.3.2: {}
 
   which-boxed-primitive@1.1.1:
     dependencies:
