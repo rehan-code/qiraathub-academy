@@ -5,7 +5,7 @@ import ical from 'ical-generator';
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    const { date, time, course, duration, email } = data;
+    const { date, time, course, duration, email, name } = data;
     
     // Parse time string to extract hours and minutes
     const timeRegex = /(\d+)(?::(\d+))?\s*(am|pm)/i;
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           summary: `QiraatHub Academy - ${course}`,
-          description: `Your ${course} class with QiraatHub Academy.`,
+          description: `${course} class with QiraatHub Academy.${name ? ` This session has been scheduled for ${name}.` : ''}`,
           startTime: startTime.toISOString(),
           endTime: endTime.toISOString(),
           attendeeEmail: email,
@@ -54,6 +54,7 @@ export async function POST(request: Request) {
         meetingLink = meetData.meeting.meetLink;
         meetingId = meetData.meeting.id;
         console.log('Google Meet created successfully:', meetingLink);
+        console.log('Go', meetData.meeting.eventLink);
       }
     } catch (error) {
       console.error('Error creating Google Meet:', error);
@@ -139,7 +140,7 @@ export async function POST(request: Request) {
           <h2 style="color: #2563eb;">New Class Scheduled</h2>
           <p>A new class has been scheduled. Here are the details:</p>
           <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
-            <p><strong>Student Email:</strong> ${email}</p>
+            <p><strong>Student:</strong> ${name ? `${name} (${email})` : email}</p>
             <p><strong>Course:</strong> ${course}</p>
             <p><strong>Date:</strong> ${new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
             <p><strong>Time:</strong> ${time}</p>

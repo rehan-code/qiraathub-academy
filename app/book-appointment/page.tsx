@@ -116,6 +116,7 @@ export default function BookClass() {
   const [selectedTime, setSelectedTime] = useState<string>("");
   const [selectedCourse, setSelectedCourse] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const { toast } = useToast();
   const { isLoaded, isSignedIn, user } = useUser();
@@ -131,10 +132,15 @@ export default function BookClass() {
     ] : []
   ];
 
-  // Autofill email if user is logged in
+  // Autofill email and name if user is logged in
   useEffect(() => {
-    if (isLoaded && isSignedIn && user?.primaryEmailAddress) {
-      setEmail(user.primaryEmailAddress.emailAddress);
+    if (isLoaded && isSignedIn) {
+      if (user?.primaryEmailAddress) {
+        setEmail(user.primaryEmailAddress.emailAddress);
+      }
+      if (user?.fullName) {
+        setName(user.fullName);
+      }
     }
   }, [isLoaded, isSignedIn, user]);
 
@@ -184,6 +190,7 @@ export default function BookClass() {
       course: selectedCourse,
       duration: course?.duration,
       email: email,
+      name: name,
     };
 
     try {

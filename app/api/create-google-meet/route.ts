@@ -23,6 +23,7 @@ export async function POST(request: Request) {
     const event = await calendar.events.insert({
       calendarId: 'primary',
       conferenceDataVersion: 1,
+      sendUpdates: 'none', // Prevent Google from sending emails
       requestBody: {
         summary,
         description,
@@ -34,8 +35,9 @@ export async function POST(request: Request) {
           dateTime: endTime,
           timeZone: 'UTC',
         },
+        // Add attendees but don't notify them
         attendees: [
-          { email: attendeeEmail },
+          { email: attendeeEmail, responseStatus: 'accepted' },
         ],
         conferenceData: {
           createRequest: {
