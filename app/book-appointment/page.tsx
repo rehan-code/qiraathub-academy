@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -118,6 +119,7 @@ export default function BookClass() {
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
+  const [isBooking, setIsBooking] = useState<boolean>(false);
   const { toast } = useToast();
   const { isLoaded, isSignedIn, user } = useUser();
 
@@ -194,6 +196,9 @@ export default function BookClass() {
     };
 
     try {
+      // Set loading state
+      setIsBooking(true);
+      
       // Show loading toast
       toast({
         title: "Booking in progress",
@@ -228,6 +233,9 @@ export default function BookClass() {
         description: "Error booking class. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      // Reset loading state regardless of success or failure
+      setIsBooking(false);
     }
   };
 
@@ -349,9 +357,16 @@ export default function BookClass() {
                   <Button
                     type="submit"
                     className="w-full bg-theme_primary hover:bg-theme_primary/90"
-                    disabled={!selectedDate || !selectedTime || !selectedCourse}
+                    disabled={!selectedDate || !selectedTime || !selectedCourse || isBooking}
                   >
-                    Book Class
+                    {isBooking ? (
+                      <>
+                        <Loader className="animate-spin -ml-1 mr-3 h-5 w-5" />
+                        Processing...
+                      </>
+                    ) : (
+                      "Book Class"
+                    )}
                   </Button>
                 </form>
               </CardContent>
