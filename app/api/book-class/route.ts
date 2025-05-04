@@ -35,7 +35,6 @@ export async function POST(request: Request) {
     
     // Create Google Meet link
     let meetingLink = '';
-    let meetingId = '';
     try {
       const meetResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/create-google-meet`, {
         method: 'POST',
@@ -52,7 +51,6 @@ export async function POST(request: Request) {
       const meetData = await meetResponse.json();
       if (meetData.success) {
         meetingLink = meetData.meeting.meetLink;
-        meetingId = meetData.meeting.id;
         console.log('Google Meet created successfully:', meetingLink);
         console.log('Go', meetData.meeting.eventLink);
       }

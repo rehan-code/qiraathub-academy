@@ -59,7 +59,7 @@ export async function POST(request: Request) {
         eventLink: event.data.htmlLink,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error creating Google Meet:', error);
     return NextResponse.json(
       { error: 'Failed to create Google Meet' },
