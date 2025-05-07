@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import ical from 'ical-generator';
+import ical, { ICalCalendarMethod, ICalEventStatus, ICalEventTransparency } from 'ical-generator';
 
 export async function POST(request: Request) {
   try {
@@ -65,21 +65,47 @@ export async function POST(request: Request) {
       name: 'QiraatHub Academy Class',
     });
     
+    // Set method using the setter instead of constructor
+    // calendar.method(ICalCalendarMethod.REQUEST);
+    
+    // Create the event with basic properties first
     const event = calendar.createEvent({
       start: startTime,
       end: endTime,
       summary: `QiraatHub Academy - ${course}`,
       description: `Your ${course} class has been scheduled.${meetingLink ? `\n\nJoin Google Meet: ${meetingLink}` : ''}`,
-      location: meetingLink || 'Online',
+      location: '',
       organizer: {
         name: 'QiraatHub Academy',
         email: process.env.EMAIL_USER || 'info@qiraathub.com',
       },
+      // Add attendee (the student) with basic properties
+      attendees: [
+        {
+          name: name || email,
+          email: email,
+        },
+      ]
     });
+    
+    // Set additional properties using method calls instead of constructor
+    // event.stamp(new Date());
+    // event.created(new Date());
+    // event.lastModified(new Date());
+    // event.status(ICalEventStatus.CONFIRMED);
+    // event.sequence(0);
+    // event.transparency(ICalEventTransparency.OPAQUE); // Same as Google's TRANSP:OPAQUE
     
     // Add URL to the event if meeting link is available
     if (meetingLink) {
       event.url(meetingLink);
+      
+      // Add X-properties for better Google Meet integration
+      event.x({
+        'X-GOOGLE-CONFERENCE': meetingLink,
+        'X-MICROSOFT-SKYPETEAMSMEETINGURL': meetingLink,
+        'X-MICROSOFT-DONOTFORWARD': 'FALSE'
+      });
     }
     
     // Configure email transporter for Hostinger
