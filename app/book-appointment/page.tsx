@@ -313,7 +313,7 @@ export default function BookClass() {
                       <label className="block text-sm font-medium text-gray-700">
                         Select Course
                       </label>
-                      <Select onValueChange={handleCourseChange}>
+                      <Select onValueChange={handleCourseChange} value={selectedCourse}>
                         <SelectTrigger>
                           <SelectValue placeholder="Choose a course" />
                         </SelectTrigger>
