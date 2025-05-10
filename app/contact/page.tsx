@@ -8,7 +8,10 @@ import {
   FaTwitter,
   FaInstagram,
   FaYoutube,
+  FaSpinner,
 } from "react-icons/fa";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -17,17 +20,54 @@ export default function Contact() {
     subject: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle the form submission
-    // For now, we'll use mailto
-    const mailtoLink = `mailto:info@qiraathub.com?subject=${encodeURIComponent(
-      formData.subject
-    )}&body=${encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
-    )}`;
-    window.location.href = mailtoLink;
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        toast({
+          title: "Success",
+          description: "Your message has been sent successfully!",
+          variant: "default",
+        });
+        // Reset form after successful submission
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: data.error || 'Failed to send message. Please try again.',
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast({
+        title: "Error",
+        description: "An error occurred. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -42,6 +82,7 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-16 px-4 sm:px-6 lg:px-8">
+      <Toaster />
       <div className="max-w-5xl mx-auto">
         <h1 className="text-4xl font-bold text-center text-gray-900 mb-16">
           Contact Us
@@ -194,9 +235,17 @@ export default function Contact() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-primary text-white py-4 px-6 rounded-lg hover:bg-primary/90 transition-colors duration-300 font-medium text-lg"
+                  disabled={isSubmitting}
+                  className="w-full bg-primary text-white py-4 px-6 rounded-lg hover:bg-primary/90 transition-colors duration-300 font-medium text-lg flex items-center justify-center"
                 >
-                  Send Message
+                  {isSubmitting ? (
+                    <>
+                      <FaSpinner className="animate-spin mr-2" />
+                      Sending...
+                    </>
+                  ) : (
+                    'Send Message'
+                  )}
                 </button>
               </form>
             </div>
