@@ -5,7 +5,7 @@ import ical from 'ical-generator';
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    const { date, time, course, duration, email } = data;
+    const { date, time, course, duration, email, name } = data;
     
     // Parse time string to extract hours and minutes
     const timeRegex = /(\d+)(?::(\d+))?\s*(am|pm)/i;
@@ -33,23 +33,80 @@ export async function POST(request: Request) {
     const endTime = new Date(startTime);
     endTime.setTime(startTime.getTime() + (duration * 60 * 60 * 1000));
     
+    // Create Google Meet link
+    let meetingLink = '';
+    try {
+      const meetResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/create-google-meet`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          summary: `QiraatHub Academy - ${course}`,
+          description: `${course} class with QiraatHub Academy.${name ? ` This session has been scheduled for ${name}.` : ''}`,
+          startTime: startTime.toISOString(),
+          endTime: endTime.toISOString(),
+          attendeeEmail: email,
+        }),
+      });
+      
+      const meetData = await meetResponse.json();
+      if (meetData.success) {
+        meetingLink = meetData.meeting.meetLink;
+        console.log('Google Meet created successfully:', meetingLink);
+        console.log('Go', meetData.meeting.eventLink);
+      }
+    } catch (error) {
+      console.error('Error creating Google Meet:', error);
+      // Continue with booking process even if meeting creation fails
+    }
+    
     // Create calendar event
     const calendar = ical({
       prodId: { company: 'qiraathub.com', product: 'QiraatHub Academy Class' },
       name: 'QiraatHub Academy Class',
     });
     
-    calendar.createEvent({
+    // Set method using the setter instead of constructor
+    // calendar.method(ICalCalendarMethod.REQUEST);
+    
+    // Create the event with basic properties first
+    const event = calendar.createEvent({
       start: startTime,
       end: endTime,
       summary: `QiraatHub Academy - ${course}`,
-      description: `Your ${course} class has been scheduled.`,
-      location: 'Online',
+      description: `Your ${course} class has been scheduled.${meetingLink ? `\n\nJoin Google Meet: ${meetingLink}` : ''}`,
+      location: '',
       organizer: {
         name: 'QiraatHub Academy',
         email: process.env.EMAIL_USER || 'info@qiraathub.com',
       },
+      // Add attendee (the student) with basic properties
+      attendees: [
+        {
+          name: name || email,
+          email: email,
+        },
+      ]
     });
+    
+    // Set additional properties using method calls instead of constructor
+    // event.stamp(new Date());
+    // event.created(new Date());
+    // event.lastModified(new Date());
+    // event.status(ICalEventStatus.CONFIRMED);
+    // event.sequence(0);
+    // event.transparency(ICalEventTransparency.OPAQUE); // Same as Google's TRANSP:OPAQUE
+    
+    // Add URL to the event if meeting link is available
+    if (meetingLink) {
+      event.url(meetingLink);
+      
+      // Add X-properties for better Google Meet integration
+      event.x({
+        'X-GOOGLE-CONFERENCE': meetingLink,
+        'X-MICROSOFT-SKYPETEAMSMEETINGURL': meetingLink,
+        'X-MICROSOFT-DONOTFORWARD': 'FALSE'
+      });
+    }
     
     // Configure email transporter for Hostinger
     const transporter = nodemailer.createTransport({
@@ -62,6 +119,11 @@ export async function POST(request: Request) {
       },
     });
     
+    // Prepare meeting link HTML for email
+    const meetingLinkHtml = meetingLink 
+      ? `<p><strong>Google Meet Link:</strong> <a href="${meetingLink}" style="color: #2563eb; text-decoration: underline;">${meetingLink}</a></p>` 
+      : '';
+
     // Send email with calendar invite to the student
     await transporter.sendMail({
       from: `"QiraatHub Academy" <${process.env.EMAIL_USER}>`,
@@ -77,6 +139,7 @@ export async function POST(request: Request) {
             <p><strong>Date:</strong> ${new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
             <p><strong>Time:</strong> ${time}</p>
             <p><strong>Duration:</strong> ${duration} ${duration === 1 ? 'hour' : 'hours'}</p>
+            ${meetingLinkHtml}
           </div>
           <p>We've attached a calendar invite to this email. You can add it to your calendar to receive a reminder.</p>
           <p>If you need to reschedule or cancel, please contact us at ${process.env.EMAIL_USER}.</p>
@@ -101,11 +164,12 @@ export async function POST(request: Request) {
           <h2 style="color: #2563eb;">New Class Scheduled</h2>
           <p>A new class has been scheduled. Here are the details:</p>
           <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; margin: 20px 0;">
-            <p><strong>Student Email:</strong> ${email}</p>
+            <p><strong>Student:</strong> ${name ? `${name} (${email})` : email}</p>
             <p><strong>Course:</strong> ${course}</p>
             <p><strong>Date:</strong> ${new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
             <p><strong>Time:</strong> ${time}</p>
             <p><strong>Duration:</strong> ${duration} ${duration === 1 ? 'hour' : 'hours'}</p>
+            ${meetingLinkHtml}
           </div>
           <p>This is an automated notification.</p>
         </div>
