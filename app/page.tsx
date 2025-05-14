@@ -14,7 +14,7 @@ export default function Home() {
         </p>
       </div>
       <PopularCourse />
-      <UserReviews />
+      {/* <UserReviews /> uncomment this line to show user reviews */}
     </div>
   );
 }
