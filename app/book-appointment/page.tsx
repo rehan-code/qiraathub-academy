@@ -224,7 +224,6 @@ export default function BookClass() {
       // Reset form
       setSelectedTime("");
       setSelectedCourse("");
-      setEmail("");
       setTimeSlots([]);
     } catch (error) {
       console.error("Error booking class:", error);
