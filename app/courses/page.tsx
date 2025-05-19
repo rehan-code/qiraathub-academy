@@ -3,6 +3,24 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { CourseData } from '@/data/coursesData';
 import { BookOpen } from 'lucide-react';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Qira'at Courses - Learn Authentic Quranic Recitation",
+  description: "Browse our selection of professional Qira'at courses. Learn authentic Quranic recitation styles with certified teachers at QiraatHub Academy.",
+  openGraph: {
+    title: "Qira'at Courses - QiraatHub Academy",
+    description: "Explore our comprehensive Qira'at courses and learn authentic Quranic recitation with certified teachers.",
+    images: [
+      {
+        url: '/images/og-courses.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'QiraatHub Academy Courses',
+      },
+    ],
+  },
+};
 
 const CoursesPage = () => {
   const courses: CourseData[] = []; // change to coursesData from coursesData.ts when ready

@@ -10,8 +10,37 @@ const geist = Geist({
 })
 
 export const metadata: Metadata = {
-  title: "Qiraathub Academy",
-  description: "Learn the 10 Qiraat with Qiraathub Academy",
+  metadataBase: new URL('https://academy.qiraathub.com'),
+  title: {
+    default: "QiraatHub Academy",
+    template: "%s | QiraatHub Academy"
+  },
+  description: "Learn the 10 Qiraat with QiraatHub Academy - Professional Quranic recitation courses with certified teachers",
+  keywords: ["Qiraat", "Quran", "Islamic education", "Quran recitation", "Tajweed", "Online Quran classes"],
+  authors: [{ name: "QiraatHub Academy" }],
+  creator: "QiraatHub Academy",
+  publisher: "QiraatHub Academy",
+  formatDetection: {
+    email: false,
+    telephone: false,
+    address: false,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://academy.qiraathub.com',
+    title: 'QiraatHub Academy',
+    description: 'Learn the 10 Qiraat with QiraatHub Academy - Professional Quranic recitation courses with certified teachers',
+    siteName: 'QiraatHub Academy',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'QiraatHub Academy',
+    description: 'Learn the 10 Qiraat with QiraatHub Academy - Professional Quranic recitation courses with certified teachers',
+  },
+  alternates: {
+    canonical: 'https://academy.qiraathub.com',
+  },
 };
 
 export default function RootLayout({
