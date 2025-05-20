@@ -1,13 +1,22 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from 'next/font/google'
 import "./globals.css";
 import Footer from "./components/footer";
 import { Navbar } from "@/components/navbar";
 import { ClerkProvider } from "@clerk/nextjs";
+import { OrganizationJsonLd, WebsiteJsonLd } from "@/components/json-ld";
 
 const geist = Geist({
   subsets: ['latin'],
+  display: 'swap',
 })
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#ffffff',
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://academy.qiraathub.com'),
@@ -51,6 +60,17 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className={geist.className}>
+        <head>
+          <OrganizationJsonLd 
+            name="QiraatHub Academy"
+            url="https://academy.qiraathub.com"
+            logo="https://academy.qiraathub.com/logo.png"
+          />
+          <WebsiteJsonLd 
+            name="QiraatHub Academy"
+            url="https://academy.qiraathub.com"
+          />
+        </head>
         <body className={`antialiased`}>
           <Navbar />
           {children}
