@@ -218,7 +218,7 @@ export default function BookClass() {
       
       toast({
         title: "Success!",
-        description: `Your class for ${selectedCourse} has been booked for ${format(selectedDate, "MMMM d, yyyy")} at ${selectedTime}. A confirmation email with calendar invite has been sent to ${email}.`,
+        description: `Your class for ${selectedCourse} has been booked for ${format(selectedDate, "MMMM d, yyyy")} at ${selectedTime} (EST). A confirmation email with calendar invite has been sent to ${email}.`,
       });
 
       // Reset form

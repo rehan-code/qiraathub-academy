@@ -14,17 +14,17 @@ export default function PopularCourse() {
               </div>
               <h2 className="text-4xl md:text-5xl font-bold leading-tight">
                 Private Hifdh{' '}
-                <span className="text-yellow-500 font-black">& 10 Qirat Classes</span>
+                <span className="text-yellow-500 font-black">& 10 Qiraat Classes</span>
               </h2>
             </div>
 
             <p className="text-gray-600 text-lg leading-relaxed">
-              Learn the Usool, or foundations, of the 10 Qirat through practical methods from qualified international lecturers in the English language from Al Azhar tradition.
+              Learn the Usool, or foundations, of the 10 Qiraat through practical methods from qualified international lecturers in the English language from Al Azhar tradition.
             </p>
             
             <div className="space-y-4">
               {[
-                'Study track of Qirat designed by QiraatHub Academy.',
+                'Study track of Qiraat designed by QiraatHub Academy.',
                 'Private Classes Personalized to your learning style.',
                 'Highly Qualified Lecturer From Al Azhar University Tradition',
                 'Rewarded by Ijazah Sanad Muttasil upon graduation.',
