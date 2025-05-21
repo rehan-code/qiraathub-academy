@@ -347,7 +347,7 @@ export default function BookClass() {
                         <p className="text-sm text-slate-500 mt-1">
                           Duration: {COURSES.find(c => c.name === selectedCourse)?.duration} {
                             COURSES.find(c => c.name === selectedCourse)?.duration === 1 ? 'hour' : 'hours'
-                          }
+                          } • All times are in Eastern Standard Time (EST)
                         </p>
                       </div>
                     )}
