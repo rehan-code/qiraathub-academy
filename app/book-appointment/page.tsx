@@ -128,8 +128,8 @@ export default function BookClass() {
     { id: 1, name: "Trial / Evaluation Class", duration: 1 },
     ...isSignedIn ? [
       { id: 2, name: "Quran Reading", duration: 1 },
-      { id: 3, name: "Tajweed", duration: 1.5 },
-      { id: 4, name: "Hifz Program", duration: 2 },
+      { id: 3, name: "Tajweed", duration: 1 },
+      { id: 4, name: "Hifz Program", duration: 1 },
       { id: 5, name: "Islamic Studies", duration: 1 },
     ] : []
   ];
