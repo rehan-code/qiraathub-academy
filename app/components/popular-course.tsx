@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import TypingAnimation from './typing-animation';
+import { Button } from '@/components/ui/button';
 
 export default function PopularCourse() {
   return (
@@ -52,15 +53,18 @@ export default function PopularCourse() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-              <button className="bg-gray-900 text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-200">
-                View Details
-              </button>
+              <Button 
+                asChild
+                size="lg"
+                className="bg-gray-900 text-white px-8 py-3 rounded-lg hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-200"
+              >
+                <a href="/book-appointment">Book Now!</a>
+              </Button>
               <div className="text-gray-800">
                 Book a free class or email us at{' '}
                 <a href="mailto:info@qiraathub.com" className="text-yellow-500 hover:text-yellow-600 font-medium hover:underline transition-colors">
                   info@qiraathub.com
                 </a>
-                {' '}| <span className="font-bold hover:text-yellow-500 cursor-pointer transition-colors">Book Now</span>
               </div>
             </div>
           </div>
