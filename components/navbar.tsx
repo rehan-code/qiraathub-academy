@@ -74,7 +74,7 @@ export function Navbar() {
       animate={{ opacity: 1, y: 0 }}
       className="relative z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/80"
     >
-      <div className="flex h-24 items-center px-4 md:px-8 lg:px-32 container mx-auto">
+      <div className="flex h-20 items-center px-4 md:px-8 lg:px-32 container mx-auto">
         <div className="flex items-center">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">

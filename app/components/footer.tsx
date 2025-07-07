@@ -12,10 +12,16 @@ export default function Footer() {
               href="/"
               className="inline-block transform transition hover:scale-105"
             >
-              <Image src="/logo.png" alt="QiraatHub Logo" width={50} height={50} className="rounded-lg shadow-sm" />
+              <Image
+                src="/Horizontal Logo.png"
+                alt="QiraatHub Logo"
+                width={260}
+                height={50}
+              />
             </Link>
             <p className="text-gray-600 text-sm leading-relaxed text-justify">
-              Your gateway to mastering the ten Qiraat—explore authentic resources and connect with a supportive learning community.
+              Your gateway to mastering the ten Qiraat. Explore authentic
+              resources and connect with a supportive learning community.
             </p>
           </div>
 
