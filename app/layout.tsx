@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from 'next/font/google'
+import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import Footer from "./components/footer";
 import { Navbar } from "@/components/navbar";
@@ -60,6 +61,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className={geist.className}>
+        <GoogleTagManager gtmId="G-RTYVR0XKQ0" />
         <head>
           <OrganizationJsonLd 
             name="QiraatHub Academy"
