@@ -61,7 +61,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className={geist.className}>
-        <GoogleTagManager gtmId="G-RTYVR0XKQ0" />
+        {/* <GoogleTagManager gtmId="G-RTYVR0XKQ0" /> */}
         <head>
           <OrganizationJsonLd 
             name="QiraatHub Academy"
