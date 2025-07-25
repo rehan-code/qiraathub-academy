@@ -102,10 +102,10 @@ export default function Contact() {
                     <FaPhone className="text-primary w-5 h-5" />
                   </div>
                   <a
-                    href="tel:+8801631362717"
+                    href="tel:+15197602953"
                     className="text-gray-600 hover:text-primary transition-colors duration-300"
                   >
-                    +880 1631-362717
+                    +1 (519) 760-2953
                   </a>
                 </div>
                 <div className="flex items-center space-x-4 group">
