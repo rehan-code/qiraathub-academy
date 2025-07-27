@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from 'next/font/google'
-import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import Footer from "./components/footer";
 import { Navbar } from "@/components/navbar";
