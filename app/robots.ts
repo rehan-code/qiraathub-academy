@@ -8,5 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow: '/admin/',
     },
     sitemap: 'https://academy.qiraathub.com/sitemap.xml',
+    host: 'https://academy.qiraathub.com',
   }
 }
