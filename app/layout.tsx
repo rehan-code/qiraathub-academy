@@ -47,9 +47,6 @@ export const metadata: Metadata = {
     title: 'QiraatHub Academy',
     description: 'Learn the 10 Qiraat with QiraatHub Academy - Professional Quranic recitation courses with certified teachers',
   },
-  alternates: {
-    canonical: 'https://academy.qiraathub.com',
-  },
 };
 
 export default function RootLayout({

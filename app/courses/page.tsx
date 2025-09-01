@@ -20,6 +20,9 @@ export const metadata: Metadata = {
       },
     ],
   },
+  alternates: {
+    canonical: 'https://academy.qiraathub.com/courses',
+  },
 };
 
 const CoursesPage = () => {

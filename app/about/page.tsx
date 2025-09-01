@@ -1,6 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "About QiraatHub Academy",
+  description: "Learn about QiraatHub Academy's mission to teach the authentic Qira'at of the Holy Quran with certified instructors.",
+  alternates: {
+    canonical: 'https://academy.qiraathub.com/about',
+  },
+};
 
 const AboutPage = () => {
   return (

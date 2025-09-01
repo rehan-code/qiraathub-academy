@@ -10,12 +10,15 @@ export const metadata: Metadata = {
     description: "Master the Ten Qiraat with QiraatHub Academy's professional Quranic recitation courses led by certified teachers.",
     images: [
       {
-        url: '/images/og-home.jpg',
+        url: '/images/qiraat/hamza.png',
         width: 1200,
         height: 630,
         alt: 'QiraatHub Academy Homepage',
       },
     ],
+  },
+  alternates: {
+    canonical: 'https://academy.qiraathub.com',
   },
 };
 
