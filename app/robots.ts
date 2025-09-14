@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/admin/',
+      disallow: '/api/',
     },
     sitemap: 'https://academy.qiraathub.com/sitemap.xml',
     host: 'https://academy.qiraathub.com',
