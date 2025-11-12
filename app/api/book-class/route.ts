@@ -35,6 +35,7 @@ export async function POST(request: Request) {
     
     // Create Google Meet link
     let meetingLink = '';
+    const teacherEmail = process.env.TEACHER_EMAIL || '';
     try {
       const meetResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/create-google-meet`, {
         method: 'POST',
@@ -45,6 +46,7 @@ export async function POST(request: Request) {
           startTime: startTime.toISOString(),
           endTime: endTime.toISOString(),
           attendeeEmail: email,
+          teacherEmail: teacherEmail,
         }),
       });
       
@@ -79,12 +81,16 @@ export async function POST(request: Request) {
         name: 'QiraatHub Academy',
         email: process.env.EMAIL_USER || 'info@qiraathub.com',
       },
-      // Add attendee (the student) with basic properties
+      // Add attendees (student and teacher) with basic properties
       attendees: [
         {
           name: name || email,
           email: email,
         },
+        ...(teacherEmail ? [{
+          name: 'Teacher',
+          email: teacherEmail,
+        }] : []),
       ]
     });
     

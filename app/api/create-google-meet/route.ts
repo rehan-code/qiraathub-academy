@@ -4,7 +4,7 @@ import { google } from 'googleapis';
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    const { summary, description, startTime, endTime, attendeeEmail } = data;
+    const { summary, description, startTime, endTime, attendeeEmail, teacherEmail } = data;
     
     // Set up OAuth2 client
     const oauth2Client = new google.auth.OAuth2(
@@ -38,6 +38,7 @@ export async function POST(request: Request) {
         // Add attendees but don't notify them
         attendees: [
           { email: attendeeEmail, responseStatus: 'accepted' },
+          { email: teacherEmail, responseStatus: 'accepted' },
         ],
         conferenceData: {
           createRequest: {
