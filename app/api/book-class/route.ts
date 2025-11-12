@@ -160,10 +160,14 @@ export async function POST(request: Request) {
       },
     });
     
-    // Send notification email to admin
+    // Send notification email to admin and teacher
+    const recipients = teacherEmail
+      ? [process.env.EMAIL_USER, teacherEmail].filter(Boolean).join(', ')
+      : process.env.EMAIL_USER;
+
     await transporter.sendMail({
       from: `"QiraatHub Academy" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
+      to: recipients,
       subject: `New Class Scheduled: ${course}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
