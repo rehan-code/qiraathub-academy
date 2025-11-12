@@ -36,6 +36,7 @@ export async function POST(request: Request) {
     // Create Google Meet link
     let meetingLink = '';
     const teacherEmail = process.env.TEACHER_EMAIL || '';
+    console.log('URL:', process.env.URL);
     try {
       const meetResponse = await fetch(`${process.env.URL || 'http://localhost:3000'}/api/create-google-meet`, {
         method: 'POST',
