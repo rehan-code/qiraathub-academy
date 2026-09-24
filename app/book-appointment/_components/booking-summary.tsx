@@ -2,7 +2,7 @@
 
 import type { ComponentType, ReactNode } from "react";
 import { BookOpen, CalendarDays, Clock, GraduationCap, Loader2, Mail, ShieldCheck } from "lucide-react";
-import type { Teacher } from "@/data/teachers";
+import { getTeacherShortName, type Teacher } from "@/data/teachers";
 import {
   formatDateInZone,
   formatTimeInZone,
@@ -46,7 +46,7 @@ export function BookingSummary({
   const canSubmit = Boolean(teacher && slot && emailValid) && !isBooking;
   const start = slot ? new Date(slot.start) : null;
   const end = slot ? new Date(slot.end) : null;
-  const teacherFirstName = teacher?.name.split(" ")[0];
+  const teacherFirstName = teacher ? getTeacherShortName(teacher) : undefined;
 
   return (
     <form

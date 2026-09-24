@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, type ComponentType, type KeyboardEvent, type MouseEvent } from "react";
-import { CalendarClock, Check, ChevronDown, Clock, Languages, MapPin, Sparkles } from "lucide-react";
-import type { Teacher } from "@/data/teachers";
+import { CalendarClock, Check, ChevronDown, Clock, MapPin, Sparkles } from "lucide-react";
+import { getTeacherShortName, type Teacher } from "@/data/teachers";
 import {
   describeAvailability,
   describeAvailabilityInZone,
@@ -24,7 +24,7 @@ interface TeacherCardProps {
 
 export function TeacherCard({ teacher, selected, onSelect, now, viewerTimeZone }: TeacherCardProps) {
   const [expanded, setExpanded] = useState(false);
-  const firstName = teacher.name.split(" ")[0];
+  const firstName = getTeacherShortName(teacher);
   const localTime = now
     ? `${formatTimeInZone(now, teacher.timeZone)} ${getTimeZoneAbbreviation(teacher.timeZone, now)}`
     : "—";
@@ -82,21 +82,10 @@ export function TeacherCard({ teacher, selected, onSelect, now, viewerTimeZone }
               <Check className="h-3.5 w-3.5" strokeWidth={3} />
             </span>
           </div>
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {teacher.specialties.map((specialty) => (
-              <span
-                key={specialty}
-                className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700"
-              >
-                {specialty}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
 
       <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 border-t border-slate-100 pt-4">
-        <Fact icon={Languages} label="Teaches in" value={teacher.languages.join(", ")} />
         <Fact icon={Clock} label="Local time" value={localTime} />
         <Fact icon={MapPin} label="Based in" value={teacher.location} />
         <Fact

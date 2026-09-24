@@ -12,12 +12,12 @@ import { ALL_DAYS, type AvailabilityWindow } from "@/lib/availability";
 export interface Teacher {
   id: string;
   name: string;
+  /** How the UI refers to the teacher in sentences ("About Muhammad"). Defaults to the first name. */
+  shortName?: string;
   title: string;
   bio: string;
   /** Short facts shown on the card, e.g. "10+ years teaching". */
   highlights: string[];
-  specialties: string[];
-  languages: string[];
   /** Where the teacher is based, for display. */
   location: string;
   /** IANA timezone id, e.g. "Africa/Lagos". */
@@ -42,26 +42,22 @@ export const teachers: Teacher[] = [
       "Ijāzāt in all ten canonical Qira’at",
       "Trained more than 10 Huffāẓ",
     ],
-    specialties: ["Qur’an Reading", "Tajweed", "Hifz", "The Ten Qira’at", "Shāṭibiyyah"],
-    languages: ["Arabic", "English"],
     location: "Nigeria",
     timeZone: "Africa/Lagos",
     // Available every day, 6:00 AM – 12:00 PM West Africa Time (UTC+1).
     availability: [{ days: ALL_DAYS, start: "06:00", end: "12:00" }],
   },
   {
-    // The academy's original instructor. Notifications go to TEACHER_EMAIL.
-    // TODO: replace the placeholder name, title and bio with the real profile.
+    // The academy's own instructor. Notifications go to TEACHER_EMAIL.
     id: "academy-instructor",
     name: "QiraatHub Academy Instructor",
+    shortName: "the instructor",
     title: "Qur’an & Tajweed Teacher",
     bio:
-      "A certified QiraatHub Academy instructor offering structured one-on-one Qur’an reading, Tajweed and Hifz classes for students of all levels.",
-    highlights: ["Certified QiraatHub instructor", "Structured, level-based lessons"],
-    specialties: ["Qur’an Reading", "Tajweed", "Hifz"],
-    languages: ["English"],
-    location: "United States",
-    timeZone: "America/New_York",
+      "An additional instructor provided directly by QiraatHub Academy. Choose this option if you would like your classes during North American daytime hours, and the academy will take care of the rest.",
+    highlights: ["Provided by QiraatHub Academy"],
+    location: "Canada",
+    timeZone: "America/Toronto",
     // Matches the academy's original booking hours: every day, 9:00 AM – 9:00 PM Eastern.
     availability: [{ days: ALL_DAYS, start: "09:00", end: "21:00" }],
   },
@@ -70,6 +66,10 @@ export const teachers: Teacher[] = [
 export function getTeacher(id: string | null | undefined): Teacher | undefined {
   if (!id) return undefined;
   return teachers.find((teacher) => teacher.id === id);
+}
+
+export function getTeacherShortName(teacher: Pick<Teacher, "name" | "shortName">): string {
+  return teacher.shortName ?? teacher.name.split(/\s+/)[0];
 }
 
 export function getTeacherInitials(teacher: Pick<Teacher, "name">): string {

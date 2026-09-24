@@ -1,7 +1,7 @@
 "use client";
 
 import { CalendarDays, Check, Clock, ExternalLink, Mail, Video } from "lucide-react";
-import type { Teacher } from "@/data/teachers";
+import { getTeacherShortName, type Teacher } from "@/data/teachers";
 import {
   formatDateInZone,
   formatTimeInZone,
@@ -32,7 +32,7 @@ export function BookingConfirmation({
 }: BookingConfirmationProps) {
   const start = new Date(slot.start);
   const end = new Date(slot.end);
-  const teacherFirstName = teacher.name.split(" ")[0];
+  const teacherFirstName = getTeacherShortName(teacher);
 
   return (
     <div className="mx-auto max-w-xl">

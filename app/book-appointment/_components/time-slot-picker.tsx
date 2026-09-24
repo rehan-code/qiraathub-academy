@@ -3,7 +3,7 @@
 import { useMemo, type ComponentType } from "react";
 import { format } from "date-fns";
 import { CalendarX2, Moon, Sun, Sunrise } from "lucide-react";
-import type { Teacher } from "@/data/teachers";
+import { getTeacherShortName, type Teacher } from "@/data/teachers";
 import {
   formatTimeInZone,
   getTimeZoneAbbreviation,
@@ -22,8 +22,6 @@ interface TimeSlotPickerProps {
   onTimeZoneChange: (timeZone: string) => void;
   teacher: Teacher;
   loading: boolean;
-  /** True when live calendar data could not be loaded and only working hours are shown. */
-  degraded: boolean;
   nextAvailableDate: Date | null;
   onJumpToDate: (date: Date) => void;
 }
@@ -49,7 +47,6 @@ export function TimeSlotPicker({
   onTimeZoneChange,
   teacher,
   loading,
-  degraded,
   nextAvailableDate,
   onJumpToDate,
 }: TimeSlotPickerProps) {
@@ -62,7 +59,7 @@ export function TimeSlotPicker({
 
   const viewerLabel = getTimeZoneAbbreviation(viewerTimeZone);
   const teacherLabel = getTimeZoneAbbreviation(teacher.timeZone);
-  const teacherFirstName = teacher.name.split(" ")[0];
+  const teacherFirstName = getTeacherShortName(teacher);
 
   return (
     <div className="flex h-full flex-col">
@@ -77,12 +74,6 @@ export function TimeSlotPicker({
         </div>
         <TimeZoneSelect value={viewerTimeZone} onChange={onTimeZoneChange} />
       </div>
-
-      {degraded && !loading && (
-        <p className="mt-3 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-800">
-          Showing regular hours. Your slot will be confirmed when you book.
-        </p>
-      )}
 
       <div className="mt-4 flex-1">
         {loading ? (

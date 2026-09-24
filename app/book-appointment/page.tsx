@@ -5,11 +5,11 @@ import Link from "next/link";
 import DatePicker from "react-datepicker";
 import { addDays, format, startOfDay } from "date-fns";
 import { useUser } from "@clerk/nextjs";
-import { ArrowDown, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowDown, ChevronLeft, ChevronRight } from "lucide-react";
 import "react-datepicker/dist/react-datepicker.css";
 import "./datepicker.css";
 
-import { getTeacher, teachers } from "@/data/teachers";
+import { getTeacher, getTeacherShortName, teachers } from "@/data/teachers";
 import {
   formatDateInZone,
   formatTimeInZone,
@@ -334,16 +334,8 @@ export default function BookClassPage() {
           />
         ) : (
           <>
-            <header className="mb-8 max-w-2xl">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-theme_primary/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-yellow-800">
-                <Sparkles className="h-3.5 w-3.5" />
-                Live one-on-one classes
-              </span>
-              <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Book a class</h1>
-              <p className="mt-3 text-base leading-relaxed text-slate-600">
-                Choose a teacher and a time that works for you. Times are shown in your timezone, and you&apos;ll
-                receive a calendar invite with a Google Meet link by email.
-              </p>
+            <header className="mb-8">
+              <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">Book a class</h1>
             </header>
 
             <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-8">
@@ -419,7 +411,7 @@ export default function BookClassPage() {
                   title="Pick a date and time"
                   description={
                     selectedTeacher
-                      ? `Showing ${selectedTeacher.name.split(" ")[0]}'s open times for the next ${BOOKING_WINDOW_DAYS} days.`
+                      ? `Showing ${getTeacherShortName(selectedTeacher)}'s open times for the next ${BOOKING_WINDOW_DAYS} days.`
                       : "Choose a teacher first to see their open times."
                   }
                   done={Boolean(activeSlot)}
@@ -478,7 +470,6 @@ export default function BookClassPage() {
                         onTimeZoneChange={handleTimeZoneChange}
                         teacher={selectedTeacher}
                         loading={busyLoading}
-                        degraded={busyInfo?.degraded ?? false}
                         nextAvailableDate={nextAvailableDate}
                         onJumpToDate={handleDateChange}
                       />
