@@ -1,0 +1,117 @@
+/* Restyle react-datepicker (inline mode) to match the booking page. */
+.qh-calendar .react-datepicker {
+  font-family: inherit;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  width: 100%;
+  color: #0f172a;
+}
+
+.qh-calendar .react-datepicker__month-container {
+  float: none;
+  width: 100%;
+}
+
+.qh-calendar .react-datepicker__header {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.qh-calendar .react-datepicker__day-names {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  margin: 0.75rem 0 0.25rem;
+}
+
+.qh-calendar .react-datepicker__day-name {
+  width: auto;
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  line-height: 1.75rem;
+}
+
+.qh-calendar .react-datepicker__month {
+  margin: 0;
+}
+
+.qh-calendar .react-datepicker__week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.qh-calendar .react-datepicker__day {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  margin: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  color: #163846;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.qh-calendar .react-datepicker__day:hover:not(.react-datepicker__day--disabled):not(.react-datepicker__day--selected) {
+  background: #f1f5f9;
+  border-radius: 0.75rem;
+}
+
+.qh-calendar .react-datepicker__day--outside-month {
+  color: #cbd5e1;
+}
+
+.qh-calendar .react-datepicker__day--disabled,
+.qh-calendar .react-datepicker__day--disabled:hover {
+  color: #cbd5e1;
+  font-weight: 400;
+  cursor: not-allowed;
+  background: transparent;
+}
+
+.qh-calendar .react-datepicker__day--today:not(.react-datepicker__day--selected)::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgb(234, 179, 8);
+}
+
+.qh-calendar .react-datepicker__day--keyboard-selected {
+  background: transparent;
+  color: inherit;
+}
+
+.qh-calendar .react-datepicker__day--keyboard-selected:not(.react-datepicker__day--selected):not(.react-datepicker__day--disabled) {
+  box-shadow: inset 0 0 0 1px #cbd5e1;
+}
+
+.qh-calendar .react-datepicker__day--selected,
+.qh-calendar .react-datepicker__day--selected:hover {
+  background: #163846 !important;
+  color: #ffffff !important;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 16px rgba(22, 56, 70, 0.28);
+}
+
+.qh-calendar .react-datepicker__day:focus-visible {
+  outline: 2px solid rgba(234, 179, 8, 0.7);
+  outline-offset: 1px;
+}

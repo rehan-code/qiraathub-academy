@@ -1,25 +1,19 @@
 import { NextResponse } from 'next/server';
-import { google } from 'googleapis';
+import { getCalendarClient } from '@/lib/server/google-calendar';
 
 export async function POST(request: Request) {
   try {
     const data = await request.json();
     const { summary, description, startTime, endTime, attendeeEmail, teacherEmail } = data;
-    
-    // Set up OAuth2 client
-    const oauth2Client = new google.auth.OAuth2(
-      process.env.GOOGLE_CLIENT_ID,
-      process.env.GOOGLE_CLIENT_SECRET
-    );
-    
-    oauth2Client.setCredentials({
-      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-    });
-    
-    // Create Google Calendar API client
-    const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
-    
-    // Create a new event with Google Meet
+
+    const calendar = getCalendarClient();
+
+    // Every booking lives on the academy calendar with the student and the
+    // teacher as attendees; /api/availability reads these back to find clashes.
+    const attendees = [attendeeEmail, teacherEmail]
+      .filter((email): email is string => typeof email === 'string' && email.trim().length > 0)
+      .map((email) => ({ email, responseStatus: 'accepted' }));
+
     const event = await calendar.events.insert({
       calendarId: 'primary',
       conferenceDataVersion: 1,
@@ -35,11 +29,7 @@ export async function POST(request: Request) {
           dateTime: endTime,
           timeZone: 'UTC',
         },
-        // Add attendees but don't notify them
-        attendees: [
-          { email: attendeeEmail, responseStatus: 'accepted' },
-          { email: teacherEmail, responseStatus: 'accepted' },
-        ],
+        attendees,
         conferenceData: {
           createRequest: {
             requestId: `qiraathub-${Date.now()}`,
@@ -50,8 +40,7 @@ export async function POST(request: Request) {
         },
       },
     });
-    
-    // Return the meeting details
+
     return NextResponse.json({
       success: true,
       meeting: {
