@@ -84,6 +84,7 @@ export default function BookClassPage() {
   const [selectedTeacherId, setSelectedTeacherId] = useState<string | null>(
     teachers.length === 1 ? teachers[0].id : null,
   );
+  const [profilesExpanded, setProfilesExpanded] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<TimeRange | null>(null);
   const [busyByTeacher, setBusyByTeacher] = useState<Record<string, BusyInfo>>({});
@@ -400,6 +401,8 @@ export default function BookClassPage() {
                         onSelect={() => handleTeacherSelect(teacher.id)}
                         now={now}
                         viewerTimeZone={viewerTimeZone}
+                        expanded={profilesExpanded}
+                        onToggleExpanded={() => setProfilesExpanded((value) => !value)}
                       />
                     ))}
                   </div>

@@ -13,6 +13,10 @@ const contacts: Record<string, TeacherContact> = {
     email: process.env.TEACHER_ELESHIN_EMAIL || "muhammadeleshin@gmail.com",
     whatsapp: "+234 908 140 7116",
   },
+  "sohaib-mohamed": {
+    email: process.env.TEACHER_SOHAIB_EMAIL || "sohaibhassona13@gmail.com",
+    whatsapp: "+20 102 592 7213",
+  },
   "academy-instructor": {
     email: process.env.TEACHER_EMAIL || "",
   },

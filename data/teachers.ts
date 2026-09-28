@@ -48,6 +48,25 @@ export const teachers: Teacher[] = [
     availability: [{ days: ALL_DAYS, start: "06:00", end: "12:00" }],
   },
   {
+    id: "sohaib-mohamed",
+    name: "Sohaib Mohamed",
+    title: "Qur’an & Qira’at Instructor",
+    bio:
+      "Sohaib Mohamed is a Qur’an and Qira’at instructor from Cairo with a decade of teaching experience. " +
+      "He holds Ijāzāt in the ten Qira’at through both Shāṭibiyyah and Ṭayyibah, as well as in the major Tajweed and Qira’at poems, and has recited the entire Qur’an to seven teachers from Egypt and Syria. " +
+      "He teaches Qur’an reading, Tajweed, the Qira’at, and Arabic for non-native speakers, and has granted Ijāzāt to students in the USA, UK, Canada, and Australia with lessons delivered fully in English. " +
+      "He is a graduate of the Faculty of Holy Qur’an and Its Sciences at Tanta University.",
+    highlights: [
+      "10 years of teaching experience",
+      "Ijāzāt in the ten Qira’at (Shāṭibiyyah & Ṭayyibah)",
+      "Has granted Ijāzāt to students in the USA, UK, Canada & Australia",
+    ],
+    location: "Egypt",
+    timeZone: "Africa/Cairo",
+    // Available every day, 9:00 AM – 9:00 PM Egypt time (UTC+2, UTC+3 in summer).
+    availability: [{ days: ALL_DAYS, start: "09:00", end: "21:00" }],
+  },
+  {
     // The academy's own instructor. Notifications go to TEACHER_EMAIL.
     id: "academy-instructor",
     name: "QiraatHub Academy Instructor",

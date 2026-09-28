@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ComponentType, type KeyboardEvent, type MouseEvent } from "react";
+import { type ComponentType, type KeyboardEvent, type MouseEvent } from "react";
 import { CalendarClock, Check, ChevronDown, Clock, MapPin, Sparkles } from "lucide-react";
 import { getTeacherShortName, type Teacher } from "@/data/teachers";
 import {
@@ -20,10 +20,20 @@ interface TeacherCardProps {
   now: Date | null;
   /** Timezone the student is viewing in; availability is shown in this zone. */
   viewerTimeZone: string;
+  /** Whether the profile is open. Shared across cards so they open and close together. */
+  expanded: boolean;
+  onToggleExpanded: () => void;
 }
 
-export function TeacherCard({ teacher, selected, onSelect, now, viewerTimeZone }: TeacherCardProps) {
-  const [expanded, setExpanded] = useState(false);
+export function TeacherCard({
+  teacher,
+  selected,
+  onSelect,
+  now,
+  viewerTimeZone,
+  expanded,
+  onToggleExpanded,
+}: TeacherCardProps) {
   const firstName = getTeacherShortName(teacher);
   const localTime = now
     ? `${formatTimeInZone(now, teacher.timeZone)} ${getTimeZoneAbbreviation(teacher.timeZone, now)}`
@@ -45,7 +55,7 @@ export function TeacherCard({ teacher, selected, onSelect, now, viewerTimeZone }
 
   const toggleBio = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    setExpanded((value) => !value);
+    onToggleExpanded();
   };
 
   return (
